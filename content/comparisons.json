@@ -1,0 +1,811 @@
+[
+  {
+    "id": "comp-1",
+    "number": 1,
+    "title": "Class vs Object",
+    "topicId": "topic-1",
+    "headers": [
+      "Aspect",
+      "Class",
+      "Object"
+    ],
+    "rows": [
+      [
+        "**Nature**",
+        "User-defined blueprint / type",
+        "Concrete runtime instance of a class"
+      ],
+      [
+        "**Memory**",
+        "No per-object RAM allocated at definition",
+        "Allocates `sizeof(Class)` bytes (stack/heap/static)"
+      ],
+      [
+        "**Lifetime**",
+        "Compile-time construct",
+        "Runtime lifetime (constructor to destructor)"
+      ],
+      [
+        "**Count**",
+        "Defined once",
+        "Zero, one, or millions of instances"
+      ]
+    ],
+    "codeExample": "class Car { int speed = 0; }; // Blueprint (0 object bytes allocated)\nCar c1, c2;                   // Two distinct objects in memory",
+    "note": ""
+  },
+  {
+    "id": "comp-2",
+    "number": 2,
+    "title": "Encapsulation vs Abstraction",
+    "topicId": "topic-4",
+    "headers": [
+      "Aspect",
+      "Encapsulation",
+      "Abstraction"
+    ],
+    "rows": [
+      [
+        "**Goal**",
+        "**Data protection & bundling** (protect invariants)",
+        "**Hiding complexity** (show *what*, hide *how*)"
+      ],
+      [
+        "**Focus**",
+        "Implementation-level (how internals are guarded)",
+        "Design-level (clean external interface)"
+      ],
+      [
+        "**C++ Tools**",
+        "`private`/`protected` access specifiers + methods",
+        "Abstract classes (`= 0`), headers, PIMPL"
+      ],
+      [
+        "**Analogy**",
+        "A medicine capsule sealing ingredients",
+        "A car dashboard (pedals hide engine mechanics)"
+      ]
+    ],
+    "codeExample": "class BankAccount {\n    double balance_ = 0;                 // Encapsulation (hidden state)\npublic:\n    virtual void pay(double amt) = 0;    // Abstraction (contract without details)\n};",
+    "note": ""
+  },
+  {
+    "id": "comp-3",
+    "number": 3,
+    "title": "Constructor vs Destructor",
+    "topicId": "topic-6",
+    "headers": [
+      "Aspect",
+      "Constructor",
+      "Destructor"
+    ],
+    "rows": [
+      [
+        "**Purpose**",
+        "Initialize object & acquire resources",
+        "Clean up & release resources"
+      ],
+      [
+        "**Name**",
+        "`ClassName(...)`",
+        "`~ClassName()`"
+      ],
+      [
+        "**Overloading**",
+        "Can be overloaded (multiple signatures)",
+        "Cannot be overloaded (only one)"
+      ],
+      [
+        "**Parameters**",
+        "Can take parameters",
+        "Takes zero parameters"
+      ],
+      [
+        "**Virtual?**",
+        "Never `virtual`",
+        "Often `virtual` in polymorphic base classes"
+      ],
+      [
+        "**Execution Order**",
+        "Base -> Members -> Derived",
+        "Derived -> Members -> Base (exact reverse)"
+      ]
+    ],
+    "codeExample": "class Handle {\n    int* p_;\npublic:\n    Handle(int v) : p_(new int(v)) {} // Constructor acquires\n    ~Handle() { delete p_; }          // Destructor releases\n};",
+    "note": ""
+  },
+  {
+    "id": "comp-4",
+    "number": 4,
+    "title": "Constructor vs Copy Constructor",
+    "topicId": "topic-7",
+    "headers": [
+      "Aspect",
+      "Normal Constructor",
+      "Copy Constructor"
+    ],
+    "rows": [
+      [
+        "**Syntax**",
+        "`T()`, `T(int x)`",
+        "`T(const T& other)`"
+      ],
+      [
+        "**Input**",
+        "Fresh arguments (or none)",
+        "Existing object of the **same** class"
+      ],
+      [
+        "**Compiler Default**",
+        "Generated only if **no** constructors exist",
+        "Generated unless suppressed (e.g. move ops declared)"
+      ],
+      [
+        "**When Called**",
+        "`T a(5);`",
+        "`T b = a;`, pass-by-value, return-by-value (unless elided)"
+      ]
+    ],
+    "codeExample": "struct Box {\n    int w;\n    Box(int x) : w(x) {}                   // Parameterized constructor\n    Box(const Box& o) : w(o.w) {}          // Copy constructor\n};",
+    "note": ""
+  },
+  {
+    "id": "comp-5",
+    "number": 5,
+    "title": "Copy Constructor vs Copy Assignment Operator",
+    "topicId": "topic-7",
+    "headers": [
+      "Aspect",
+      "Copy Constructor",
+      "Copy Assignment Operator"
+    ],
+    "rows": [
+      [
+        "**Signature**",
+        "`T(const T& other)`",
+        "`T& operator=(const T& rhs)`"
+      ],
+      [
+        "**Target State**",
+        "Creates a **brand-new** object from scratch",
+        "Overwrites an **already-existing** object"
+      ],
+      [
+        "**Old Cleanup?**",
+        "No prior resources to free",
+        "Must free/reuse existing resources first"
+      ],
+      [
+        "**Self-check?**",
+        "Not needed (`this` is newly born)",
+        "Must handle `a = a;` safely"
+      ],
+      [
+        "**Trigger Syntax**",
+        "`T b = a;` or `T b(a);`",
+        "`b = a;` (after `b` already exists)"
+      ]
+    ],
+    "codeExample": "Box a(10);\nBox b = a; // Calls Copy Constructor\nBox c(20);\nc = a;     // Calls Copy Assignment Operator",
+    "note": ""
+  },
+  {
+    "id": "comp-6",
+    "number": 6,
+    "title": "Shallow Copy vs Deep Copy",
+    "topicId": "topic-1",
+    "headers": [
+      "Aspect",
+      "Shallow Copy",
+      "Deep Copy"
+    ],
+    "rows": [
+      [
+        "**Behavior**",
+        "Copies member values directly (pointer address copied)",
+        "Allocates new heap memory and copies pointed-to data"
+      ],
+      [
+        "**Independence**",
+        "Objects share the same heap block",
+        "Objects are 100% independent"
+      ],
+      [
+        "**Risk with Raw Ptrs**",
+        "Aliasing mutation + Double-free UB",
+        "Safe (each object owns & frees its own buffer)"
+      ],
+      [
+        "**Default Compiler Copy**",
+        "Memberwise (shallow for raw pointers)",
+        "Must be written manually (or via `std::vector`/`std::string`)"
+      ]
+    ],
+    "codeExample": "// Shallow: b.ptr = a.ptr; (both point to same int!)\n// Deep:    b.ptr = new int(*a.ptr); (separate heap ints)",
+    "note": ""
+  },
+  {
+    "id": "comp-7",
+    "number": 7,
+    "title": "Function Overloading vs Function Overriding",
+    "topicId": "topic-16",
+    "headers": [
+      "Aspect",
+      "Overloading",
+      "Overriding"
+    ],
+    "rows": [
+      [
+        "**Scope**",
+        "Same scope (same class or namespace)",
+        "Base class and Derived class"
+      ],
+      [
+        "**Signature**",
+        "Same name, **different parameters**",
+        "**Exact same** signature & `const`/ref-qualifiers"
+      ],
+      [
+        "**`virtual` Needed?**",
+        "No",
+        "Yes (`Base` method must be `virtual`)"
+      ],
+      [
+        "**Binding Time**",
+        "Compile time (static)",
+        "Runtime (dynamic via `vtable`, through `Base*`/`Base&`)"
+      ],
+      [
+        "**Return Type**",
+        "Can differ (if params differ)",
+        "Must match (or be covariant pointer/ref)"
+      ]
+    ],
+    "codeExample": "struct Base {\n    void f(int);                 // Overloaded with f(double)\n    void f(double);\n    virtual void g() const;      // Overridden in Derived\n};\nstruct Derived : Base {\n    void g() const override;\n};",
+    "note": ""
+  },
+  {
+    "id": "comp-8",
+    "number": 8,
+    "title": "Compile-Time Polymorphism vs Runtime Polymorphism",
+    "topicId": "topic-18",
+    "headers": [
+      "Aspect",
+      "Compile-Time Polymorphism",
+      "Runtime Polymorphism"
+    ],
+    "rows": [
+      [
+        "**Mechanisms**",
+        "Function/Operator Overloading, Templates, CRTP",
+        "`virtual` functions + Inheritance + `Base*`/`Base&`"
+      ],
+      [
+        "**Resolution**",
+        "Decided by compiler at compile time",
+        "Decided at runtime via `vptr` -> `vtable`"
+      ],
+      [
+        "**Speed**",
+        "Fastest (zero dispatch cost, inlinable)",
+        "Slight cost (1 pointer indirection + `vptr` per object)"
+      ],
+      [
+        "**Flexibility**",
+        "Types must be known at compile time",
+        "Handles heterogeneous containers at runtime"
+      ]
+    ],
+    "codeExample": "template <typename T> T add(T a, T b) { return a + b; } // Compile-time\nvoid render(const Shape& s) { s.draw(); }              // Runtime (if draw is virtual)",
+    "note": ""
+  },
+  {
+    "id": "comp-9",
+    "number": 9,
+    "title": "Static Binding vs Dynamic Binding",
+    "topicId": "topic-12",
+    "headers": [
+      "Aspect",
+      "Static (Early) Binding",
+      "Dynamic (Late) Binding"
+    ],
+    "rows": [
+      [
+        "**When Bound**",
+        "Compile / link time",
+        "Runtime"
+      ],
+      [
+        "**Applies To**",
+        "Non-virtual functions, overloaded calls, `static` methods, value calls `obj.f()`",
+        "`virtual` functions called through `Base*` or `Base&`"
+      ],
+      [
+        "**Default Arguments**",
+        "Always statically bound!",
+        "Function body dynamic, default arg STILL static!"
+      ],
+      [
+        "**Overhead**",
+        "Zero",
+        "One vtable lookup"
+      ]
+    ],
+    "codeExample": "Derived d;\nBase* p = &d;\np->nonVirtual(); // Static binding -> Base::nonVirtual()\np->isVirtual();  // Dynamic binding -> Derived::isVirtual()",
+    "note": ""
+  },
+  {
+    "id": "comp-10",
+    "number": 10,
+    "title": "`public` vs `protected` vs `private` (Class Access Specifiers)",
+    "topicId": "topic-3",
+    "headers": [
+      "Specifier",
+      "Inside Same Class",
+      "Inside Derived Class",
+      "Outside (`main()`)",
+      "`friend`s"
+    ],
+    "rows": [
+      [
+        "**`public`**",
+        "Yes",
+        "Yes",
+        "Yes",
+        "Yes"
+      ],
+      [
+        "**`protected`**",
+        "Yes",
+        "Yes",
+        "**No**",
+        "Yes"
+      ],
+      [
+        "**`private`**",
+        "Yes",
+        "**No**",
+        "**No**",
+        "Yes"
+      ]
+    ],
+    "codeExample": "",
+    "note": "Default in `class` is `private`; default in `struct` is `public`."
+  },
+  {
+    "id": "comp-11",
+    "number": 11,
+    "title": "`public` vs `protected` vs `private` Inheritance",
+    "topicId": "topic-13",
+    "headers": [
+      "Base Member Access",
+      "`public` Inheritance",
+      "`protected` Inheritance",
+      "`private` Inheritance"
+    ],
+    "rows": [
+      [
+        "**`public`**",
+        "`public`",
+        "`protected`",
+        "`private`"
+      ],
+      [
+        "**`protected`**",
+        "`protected`",
+        "`protected`",
+        "`private`"
+      ],
+      [
+        "**`private`**",
+        "Inaccessible",
+        "Inaccessible",
+        "Inaccessible"
+      ],
+      [
+        "**External Upcast `Base* = &d`**",
+        "Allowed",
+        "Denied",
+        "Denied"
+      ],
+      [
+        "**Design Meaning**",
+        "\"is-a\"",
+        "Internal hierarchy sharing",
+        "\"is-implemented-in-terms-of\""
+      ]
+    ],
+    "codeExample": "",
+    "note": ""
+  },
+  {
+    "id": "comp-12",
+    "number": 12,
+    "title": "Abstract Class vs Interface (in C++)",
+    "topicId": "topic-22",
+    "headers": [
+      "Aspect",
+      "Abstract Class",
+      "Interface (Idiomatic C++)"
+    ],
+    "rows": [
+      [
+        "**C++ Keyword**",
+        "Class with >= 1 `= 0` function",
+        "Abstract class with **only** `= 0` methods (no native `interface` keyword)"
+      ],
+      [
+        "**Data Members**",
+        "Can hold state (`protected` / `private` fields)",
+        "Zero non-static data members"
+      ],
+      [
+        "**Implemented Methods**",
+        "Can mix concrete + pure virtual methods",
+        "Only pure virtual methods + `virtual ~I() = default;`"
+      ],
+      [
+        "**Constructors**",
+        "Often has constructors to init base state",
+        "Usually no user constructor needed"
+      ],
+      [
+        "**Design Role**",
+        "Shared partial base (\"is-a\")",
+        "Pure behavioral contract (\"can-do\")"
+      ]
+    ],
+    "codeExample": "",
+    "note": ""
+  },
+  {
+    "id": "comp-13",
+    "number": 13,
+    "title": "Composition vs Aggregation",
+    "topicId": "topic-27",
+    "headers": [
+      "Aspect",
+      "Composition",
+      "Aggregation"
+    ],
+    "rows": [
+      [
+        "**Relationship**",
+        "Strong \"has-a\" / \"owns-a\"",
+        "Weak \"has-a\" / \"uses-shared\""
+      ],
+      [
+        "**Part Lifetime**",
+        "Tied to whole (part dies when whole dies)",
+        "Independent (part outlives whole)"
+      ],
+      [
+        "**Sharing**",
+        "Exclusive to one owner",
+        "Can be shared across multiple wholes"
+      ],
+      [
+        "**C++17 Representation**",
+        "`Part p_;` or `std::unique_ptr<Part>`",
+        "`Part*`, `std::weak_ptr<Part>`, `std::reference_wrapper`"
+      ]
+    ],
+    "codeExample": "class Car { Engine eng_; };                     // Composition (Car owns Engine)\nclass Dept { std::vector<Professor*> profs_; }; // Aggregation (Prof survives Dept)",
+    "note": ""
+  },
+  {
+    "id": "comp-14",
+    "number": 14,
+    "title": "Association vs Aggregation",
+    "topicId": "topic-27",
+    "headers": [
+      "Aspect",
+      "Association",
+      "Aggregation"
+    ],
+    "rows": [
+      [
+        "**Nature**",
+        "General peer relationship (\"uses / interacts with\")",
+        "Specialized whole–part relationship (\"has-a\")"
+      ],
+      [
+        "**Hierarchy**",
+        "No container/part hierarchy (`Doctor` <-> `Patient`)",
+        "Clear whole & part (`Playlist` contains `Song`s)"
+      ],
+      [
+        "**Ownership**",
+        "None",
+        "Weak / non-exclusive"
+      ],
+      [
+        "**Multiplicity**",
+        "1-1, 1-N, M-N",
+        "Usually 1-N (whole to parts)"
+      ]
+    ],
+    "codeExample": "",
+    "note": ""
+  },
+  {
+    "id": "comp-15",
+    "number": 15,
+    "title": "Aggregation vs Composition (Quick Lifetime & Ownership Focus)",
+    "topicId": "topic-27",
+    "headers": [
+      "Question",
+      "Aggregation",
+      "Composition"
+    ],
+    "rows": [
+      [
+        "**Can the part exist without the whole?**",
+        "**Yes** (`Book` exists without `LibraryShelf`)",
+        "**No** (`Room` cannot exist without `House`)"
+      ],
+      [
+        "**Who calls `delete` / owns destruction?**",
+        "External owner (NOT the aggregator)",
+        "The whole object automatically destroys the part"
+      ],
+      [
+        "**UML Diamond**",
+        "Hollow diamond `◇---`",
+        "Filled diamond `◆---`"
+      ]
+    ],
+    "codeExample": "",
+    "note": ""
+  },
+  {
+    "id": "comp-16",
+    "number": 16,
+    "title": "Virtual Function vs Pure Virtual Function",
+    "topicId": "topic-1",
+    "headers": [
+      "Aspect",
+      "Virtual Function",
+      "Pure Virtual Function"
+    ],
+    "rows": [
+      [
+        "**Syntax**",
+        "`virtual void draw();`",
+        "`virtual void draw() = 0;`"
+      ],
+      [
+        "**Base Body**",
+        "Provides a default implementation",
+        "Usually no body (though out-of-line body is legal!)"
+      ],
+      [
+        "**Base Instantiable?**",
+        "Yes",
+        "**No** (makes class abstract)"
+      ],
+      [
+        "**Derived Override**",
+        "Optional",
+        "**Mandatory** for concrete derived classes"
+      ]
+    ],
+    "codeExample": "",
+    "note": ""
+  },
+  {
+    "id": "comp-17",
+    "number": 17,
+    "title": "Virtual Destructor vs Normal Destructor",
+    "topicId": "topic-9",
+    "headers": [
+      "Aspect",
+      "Normal Destructor",
+      "Virtual Destructor"
+    ],
+    "rows": [
+      [
+        "**`delete basePtr` (pointing to `Derived`)**",
+        "**Undefined Behavior** (usually skips `~Derived()`)",
+        "Calls `~Derived()` then `~Base()` safely"
+      ],
+      [
+        "**Memory Overhead**",
+        "0 bytes (`vptr` not needed if no other virtuals)",
+        "Adds 1 `vptr` per object (if class had no other virtuals)"
+      ],
+      [
+        "**When to Use**",
+        "Concrete / value classes (`Point`, `std::vector`)",
+        "Any polymorphic base class (`public virtual` or `protected` non-virtual)"
+      ]
+    ],
+    "codeExample": "",
+    "note": ""
+  },
+  {
+    "id": "comp-18",
+    "number": 18,
+    "title": "Rule of 3 vs Rule of 5 vs Rule of 0",
+    "topicId": "topic-30",
+    "headers": [
+      "Aspect",
+      "Rule of 3",
+      "Rule of 5",
+      "Rule of 0"
+    ],
+    "rows": [
+      [
+        "**Standard**",
+        "C++98 / C++03",
+        "C++11 / C++17+",
+        "Modern C++11 / C++17+ (Best Practice)"
+      ],
+      [
+        "**Special Functions Managed**",
+        "`~T()`, `T(const T&)`, `operator=(const T&)`",
+        "Rule of 3 + `T(T&&)` + `operator=(T&&)`",
+        "**Zero** custom special functions!"
+      ],
+      [
+        "**Resource Strategy**",
+        "Manual `new`/`delete` inside class",
+        "Manual `new`/`delete` + fast `noexcept` moves",
+        "Delegate to `std::unique_ptr`, `std::vector`, `std::string`"
+      ],
+      [
+        "**When to Use**",
+        "Legacy codebases",
+        "Writing low-level RAII wrappers/containers",
+        "95%+ of application/domain classes"
+      ]
+    ],
+    "codeExample": "",
+    "note": ""
+  },
+  {
+    "id": "comp-19",
+    "number": 19,
+    "title": "`static` vs `inline static` Data Members",
+    "topicId": "topic-32",
+    "headers": [
+      "Aspect",
+      "Pre-C++17 `static`",
+      "C++17 `inline static`"
+    ],
+    "rows": [
+      [
+        "**In-Class Initialization**",
+        "Only `const` integral/enum (or `constexpr`)",
+        "**Any type** (`int`, `std::string`, `std::vector`)"
+      ],
+      [
+        "**Out-of-Class Definition**",
+        "Mandatory in `.cpp` (`int A::x = 0;`)",
+        "**Not needed!**"
+      ],
+      [
+        "**Header-Only Libraries**",
+        "Causes multiple-definition linker error",
+        "**100% ODR-safe in headers!**"
+      ],
+      [
+        "**Memory Copy Count**",
+        "1 shared variable per class",
+        "1 shared variable per class (identical!)"
+      ]
+    ],
+    "codeExample": "",
+    "note": ""
+  },
+  {
+    "id": "comp-20",
+    "number": 20,
+    "title": "Member Function vs `friend` Function",
+    "topicId": "topic-25",
+    "headers": [
+      "Aspect",
+      "Member Function",
+      "`friend` Function"
+    ],
+    "rows": [
+      [
+        "**Belongs to Class?**",
+        "Yes (`Class::func`)",
+        "**No** (free / external function)"
+      ],
+      [
+        "**`this` Pointer?**",
+        "Yes (`this` is implicit 1st param)",
+        "**No** (`this` does not exist)"
+      ],
+      [
+        "**Invoke Syntax**",
+        "`obj.func(x)`",
+        "`func(obj, x)`"
+      ],
+      [
+        "**Left Operand Conversion**",
+        "Does NOT convert `*this` (`obj + 5` ok, `5 + obj` fails)",
+        "Converts **both** operands (`5 + obj` works!)"
+      ],
+      [
+        "**`virtual` Possible?**",
+        "Yes",
+        "**No**"
+      ]
+    ],
+    "codeExample": "",
+    "note": ""
+  },
+  {
+    "id": "comp-21",
+    "number": 21,
+    "title": "`struct` vs `class` (in C++)",
+    "topicId": "topic-1",
+    "headers": [
+      "Aspect",
+      "`struct`",
+      "`class`"
+    ],
+    "rows": [
+      [
+        "**Default Member Access**",
+        "`public`",
+        "`private`"
+      ],
+      [
+        "**Default Base Inheritance**",
+        "`public`",
+        "`private`"
+      ],
+      [
+        "**Constructors / Virtuals / Templates?**",
+        "Full support (identical to `class`!)",
+        "Full support"
+      ],
+      [
+        "**Idiomatic Convention**",
+        "Plain data bundles / POD / traits / stateless functors",
+        "Objects with invariants & encapsulated behavior"
+      ]
+    ],
+    "codeExample": "",
+    "note": ""
+  },
+  {
+    "id": "comp-22",
+    "number": 22,
+    "title": "Object Slicing vs Polymorphism",
+    "topicId": "topic-18",
+    "headers": [
+      "Aspect",
+      "Object Slicing",
+      "Polymorphism"
+    ],
+    "rows": [
+      [
+        "**How Passed / Stored**",
+        "By **value** (`Base b = derived;`)",
+        "By **pointer or reference** (`Base& b = derived;`)"
+      ],
+      [
+        "**What Happens to `Derived` Parts**",
+        "Stripped off; `vptr` reset to `Base`",
+        "Preserved intact; `vptr` stays `Derived`"
+      ],
+      [
+        "**Virtual Call Result**",
+        "Calls `Base::method()`",
+        "Calls `Derived::method()`"
+      ],
+      [
+        "**Prevention**",
+        "Use `const Base&`, `unique_ptr<Base>`, or delete `Base` copy ops",
+        "Design base classes with `= 0` or protected copy ops"
+      ]
+    ],
+    "codeExample": "",
+    "note": ""
+  }
+]

@@ -1,0 +1,145 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../backend/node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model UserProfile {
+  id                 Int      @id @default(1)
+  displayName        String   @default("CSE Candidate")
+  theme              String   @default("dark")
+  dailyTargetMinutes Int      @default(75)
+  streakCount        Int      @default(0)
+  lastStudyDate      String?
+  totalStudySeconds  Int      @default(0)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model TopicProgress {
+  id            Int       @id @default(autoincrement())
+  topicId       String    @unique
+  status        String    @default("Not Started") // Not Started | In Progress | Completed | Needs Revision
+  bookmarked    Boolean   @default(false)
+  needsRevision Boolean   @default(false)
+  notes         String    @default("")
+  studySeconds  Int       @default(0)
+  lastStudiedAt DateTime?
+  updatedAt     DateTime  @updatedAt
+}
+
+model QuestionAttempt {
+  id              Int       @id @default(autoincrement())
+  questionId      String    @unique
+  topicId         String
+  status          String    @default("Untouched") // Untouched | Solved | Incorrect | Skipped
+  bookmarked      Boolean   @default(false)
+  needsRevision   Boolean   @default(false)
+  notes           String    @default("")
+  revisionStage   Int       @default(0) // 0=none, 1=1d, 2=3d, 3=7d, 4=14d
+  nextRevisionAt  DateTime?
+  lastAttemptedAt DateTime?
+  updatedAt       DateTime  @updatedAt
+}
+
+model CodingStatus {
+  id              Int       @id @default(autoincrement())
+  problemId       String    @unique
+  solved          Boolean   @default(false)
+  bookmarked      Boolean   @default(false)
+  needsRevision   Boolean   @default(false)
+  savedCode       String    @default("")
+  notes           String    @default("")
+  lastSubmittedAt DateTime?
+  updatedAt       DateTime  @updatedAt
+}
+
+model CodingSubmission {
+  id        Int      @id @default(autoincrement())
+  problemId String
+  code      String
+  status    String // Passed | Compile Error | Runtime Error | Time Limit Exceeded | Wrong Answer
+  stdout    String   @default("")
+  stderr    String   @default("")
+  runtimeMs Int      @default(0)
+  passed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model OutputAttempt {
+  id             Int       @id @default(autoincrement())
+  puzzleId       String    @unique
+  category       String
+  userPrediction String    @default("")
+  attempted      Boolean   @default(false)
+  isCorrect      Boolean   @default(false)
+  bookmarked     Boolean   @default(false)
+  needsRevision  Boolean   @default(false)
+  notes          String    @default("")
+  revisionStage  Int       @default(0)
+  nextRevisionAt DateTime?
+  attemptedAt    DateTime?
+  updatedAt      DateTime  @updatedAt
+}
+
+model ComparisonProgress {
+  id           Int      @id @default(autoincrement())
+  comparisonId String   @unique
+  bookmarked   Boolean  @default(false)
+  revised      Boolean  @default(false)
+  notes        String   @default("")
+  updatedAt    DateTime @updatedAt
+}
+
+model DesignProgress {
+  id            Int      @id @default(autoincrement())
+  designId      String   @unique
+  completed     Boolean  @default(false)
+  bookmarked    Boolean  @default(false)
+  checklistJson String   @default("{}")
+  notes         String   @default("")
+  updatedAt     DateTime @updatedAt
+}
+
+model SolidModuleProgress {
+  id                 Int      @id @default(autoincrement())
+  moduleId           String   @unique
+  completed          Boolean  @default(false)
+  solvedPracticeJson String   @default("{}")
+  notes              String   @default("")
+  updatedAt          DateTime @updatedAt
+}
+
+model MockAttempt {
+  id                 Int      @id @default(autoincrement())
+  roundId            String
+  roundNumber        Int
+  score              Int
+  maxScore           Int      @default(100)
+  durationSeconds    Int      @default(0)
+  answersJson        String
+  topicBreakdownJson String
+  submittedAt        DateTime @default(now())
+}
+
+model StudyPlanDay {
+  id                 Int       @id @default(autoincrement())
+  day                Int       @unique
+  completed          Boolean   @default(false)
+  completedTasksJson String    @default("{}")
+  notes              String    @default("")
+  completedAt        DateTime?
+  updatedAt          DateTime  @updatedAt
+}
+
+model StudySessionLog {
+  id        Int      @id @default(autoincrement())
+  dateKey   String
+  minutes   Int
+  module    String
+  createdAt DateTime @default(now())
+}

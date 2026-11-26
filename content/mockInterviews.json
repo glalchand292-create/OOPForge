@@ -1,0 +1,792 @@
+[
+  {
+    "id": "mock-1",
+    "roundNumber": 1,
+    "title": "Fundamentals, Classes & Encapsulation",
+    "difficulty": "Easy",
+    "durationMinutes": 40,
+    "questions": [
+      {
+        "number": 1,
+        "type": "Theory",
+        "prompt": "Why is C++ considered multi-paradigm rather than pure OOP?",
+        "code": "",
+        "answerKey": "C++ supports procedural programming (`main()`, free functions), primitive non-object types (`int`), generic programming (templates), and functional lambdas alongside OOP."
+      },
+      {
+        "number": 2,
+        "type": "Theory",
+        "prompt": "Explain the difference between Encapsulation and Abstraction with a real-life example.",
+        "code": "",
+        "answerKey": "**Encapsulation:** bundling data + methods and hiding raw state (`private balance_`) to protect invariants. **Abstraction:** exposing *what* an object does while hiding *how* (dashboard pedals vs engine internals)."
+      },
+      {
+        "number": 3,
+        "type": "Theory",
+        "prompt": "Why is `sizeof(EmptyClass)` equal to 1 byte instead of 0?",
+        "code": "",
+        "answerKey": "So two distinct objects in an array `Empty arr[2];` have distinct addresses (`&arr[0] != &arr[1]`). (Exception: EBO when inherited.)"
+      },
+      {
+        "number": 4,
+        "type": "Theory",
+        "prompt": "What is the exact difference between a `struct` and a `class` in C++?",
+        "code": "",
+        "answerKey": "Only default member access (`public` in `struct`, `private` in `class`) and default inheritance mode (`public` in `struct`, `private` in `class`)."
+      },
+      {
+        "number": 5,
+        "type": "Theory",
+        "prompt": "Can one `Student` object access `private` members of another `Student` object inside a member method? Why?",
+        "code": "",
+        "answerKey": "**Yes.** Access control in C++ is class-based, not object-based—needed for copy constructors and `operator==`."
+      },
+      {
+        "number": 6,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   class A { int x; public: A(int v = 5) : x(v) {} int get() const { return x; } };\n   int main() { A a; const A b(12); std::cout << a.get() << \" \" << b.get() << \"\\n\"; }",
+        "answerKey": "**Output:** `5 12` (`const A b` can call `get() const`)."
+      },
+      {
+        "number": 7,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   struct S { int id; S(int i) : id(i) { std::cout << \"+\" << id; } ~S() { std::cout << \"-\" << id; } };\n   int main() { S a(1); { S b(2); } S c(3); }",
+        "answerKey": "**Output:** `+1+2-2+3-3-1` (`b` dies at inner `}`)."
+      },
+      {
+        "number": 8,
+        "type": "Coding",
+        "prompt": "Write a `BankAccount` class with private `balance_`, constructor enforcing `balance >= 0`, `deposit(double)`, `withdraw(double)` returning `bool`, and `balance() const`.",
+        "code": "",
+        "answerKey": "**Code Check:** Validate `initial >= 0` in ctor, `amt > 0` in `deposit`, `amt > 0 && amt <= balance_` in `withdraw`, mark `balance() const`."
+      },
+      {
+        "number": 9,
+        "type": "Coding",
+        "prompt": "Implement a `Circle` class with an `explicit` radius constructor and `area() const` method.",
+        "code": "",
+        "answerKey": "**Code Check:** `explicit Circle(double r) : r_(r) {}` and `double area() const { return 3.141592653589793 * r_ * r_; }`."
+      },
+      {
+        "number": 10,
+        "type": "Design",
+        "prompt": "What classes and relationships (`is-a` vs `has-a`) would you identify for a basic **Student Management System**?",
+        "code": "",
+        "answerKey": "**Design:** `Student`, `Course`, `Instructor`, `Enrollment` (Association class storing grade), `Registrar`."
+      }
+    ]
+  },
+  {
+    "id": "mock-2",
+    "roundNumber": 2,
+    "title": "Constructors, Destructors, `this` & `static`",
+    "difficulty": "Easy-Medium",
+    "durationMinutes": 40,
+    "questions": [
+      {
+        "number": 1,
+        "type": "Theory",
+        "prompt": "List 4 cases where a Member Initializer List is **mandatory** in C++.",
+        "code": "",
+        "answerKey": "(1) `const` members, (2) reference members, (3) member objects lacking default constructors, (4) passing args to `Base` constructors."
+      },
+      {
+        "number": 2,
+        "type": "Theory",
+        "prompt": "What is the difference between `T b = a;` and `b = a;`?",
+        "code": "",
+        "answerKey": "`T b = a;` calls **Copy Constructor** (new object born); `b = a;` calls **Copy Assignment Operator** (`b` already exists)."
+      },
+      {
+        "number": 3,
+        "type": "Theory",
+        "prompt": "Why can't a constructor be `virtual` or `static`?",
+        "code": "",
+        "answerKey": "Virtual dispatch needs `vptr` (which the constructor itself sets up); `static` has no `this` pointer to initialize."
+      },
+      {
+        "number": 4,
+        "type": "Theory",
+        "prompt": "Explain `this` pointer type inside a normal vs `const` member function.",
+        "code": "",
+        "answerKey": "Normal: `T* const`. `const` method: `const T* const`."
+      },
+      {
+        "number": 5,
+        "type": "Theory",
+        "prompt": "Why can't a `static` member function be marked `const`?",
+        "code": "",
+        "answerKey": "`const` qualifies the hidden `this` pointer; `static` functions have no `this` pointer."
+      },
+      {
+        "number": 6,
+        "type": "Output",
+        "prompt": "Predict the output (or UB/Error!):",
+        "code": "#include <iostream>\n   struct Pair {\n       int b, a;\n       Pair(int x) : a(x), b(a + 1) {}\n   };\n   // What happens when `Pair p(10);` runs and prints `p.b`?",
+        "answerKey": "**[UNDEFINED BEHAVIOR]** `b` is declared before `a`, so `b(a + 1)` reads uninitialized garbage `a`!"
+      },
+      {
+        "number": 7,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   struct Chain {\n       int v = 1;\n       Chain add(int x) { v += x; return *this; }\n       Chain& addR(int x) { v += x; return *this; }\n   };\n   int main() { Chain c; c.add(2).add(3); std::cout << c.v << \" \"; c.addR(2).addR(3); std::cout << c.v; }",
+        "answerKey": "**Output:** `3 6` (`add` returns by value so `.add(3)` mutates a temporary; `addR` returns `Chain&`!)."
+      },
+      {
+        "number": 8,
+        "type": "Coding",
+        "prompt": "Write a `User` class using C++17 `inline static` to auto-assign unique IDs starting from `1001` and track total users created.",
+        "code": "",
+        "answerKey": "**Code Check:** `inline static int nextId_ = 1001; inline static int total_ = 0;` incremented in ctor/copy ctor."
+      },
+      {
+        "number": 9,
+        "type": "Coding",
+        "prompt": "Write a `Rectangle` class using a **delegating constructor** so `Rectangle()`, `Rectangle(side)`, and `Rectangle(w, h)` all share one validation block.",
+        "code": "",
+        "answerKey": "**Code Check:** `Rectangle() : Rectangle(1, 1) {}`, `Rectangle(double s) : Rectangle(s, s) {}`, `Rectangle(double w, double h) ...`."
+      },
+      {
+        "number": 10,
+        "type": "Design",
+        "prompt": "Explain how you would design a **Singleton Logger** in C++17 safely (thread-safe, no memory leak, non-copyable).",
+        "code": "",
+        "answerKey": "**Design:** Meyers' Singleton: private ctor, deleted copy/move, `static Logger& get() { static Logger inst; return inst; }`."
+      }
+    ]
+  },
+  {
+    "id": "mock-3",
+    "roundNumber": 3,
+    "title": "Shallow/Deep Copy & Copy Assignment",
+    "difficulty": "Medium",
+    "durationMinutes": 40,
+    "questions": [
+      {
+        "number": 1,
+        "type": "Theory",
+        "prompt": "Why must the copy constructor take `const T&` instead of `T` by value?",
+        "code": "",
+        "answerKey": "Pass-by-value parameter `T` would invoke the copy constructor itself -> infinite recursion (rejected at compile time)."
+      },
+      {
+        "number": 2,
+        "type": "Theory",
+        "prompt": "What two bugs happen when you shallow-copy a class owning a raw `int*`?",
+        "code": "",
+        "answerKey": "Aliasing mutation + Double-free UB on destruction (plus memory leak on assignment)."
+      },
+      {
+        "number": 3,
+        "type": "Theory",
+        "prompt": "Why should `operator=` check `if (this == &rhs)` AND return `*this` by reference?",
+        "code": "",
+        "answerKey": "`this == &rhs` stops deleting own buffer on `a = a;`; returning `T&` enables chaining `a = b = c;` without temporary copies."
+      },
+      {
+        "number": 4,
+        "type": "Theory",
+        "prompt": "Explain why `delete[] data_` should come **after** allocating the new buffer inside `operator=`.",
+        "code": "",
+        "answerKey": "Strong exception safety: if `new[]` throws `std::bad_alloc`, old `data_` isn't dangling!"
+      },
+      {
+        "number": 5,
+        "type": "Theory",
+        "prompt": "What does C++17 Guaranteed Copy Elision do on `Box b = makeBox();`?",
+        "code": "",
+        "answerKey": "Constructs `makeBox()`'s return prvalue directly in `b`'s memory—zero copy/move calls!"
+      },
+      {
+        "number": 6,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   struct X {\n       X() { std::cout << \"D \"; }\n       X(const X&) { std::cout << \"CC \"; }\n       X& operator=(const X&) { std::cout << \"CA \"; return *this; }\n   };\n   void f(X x) {}\n   int main() { X a; X b = a; f(a); b = a; }",
+        "answerKey": "**Output:** `D CC CC Dtor?` -> wait, no `~X` printed here, so exact output: `D CC CC CA ` (`X b = a;` -> `CC`, `f(a)` -> `CC`, `b = a` -> `CA`)."
+      },
+      {
+        "number": 7,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   struct N {\n       int v; N(int x = 0) : v(x) {}\n       N& operator=(const N& r) { v = r.v; return *this; }\n   };\n   int main() { N a(1), b(2), c(3); a = b = c; std::cout << a.v << b.v << c.v; }",
+        "answerKey": "**Output:** `333` (right-to-left: `b = c` sets `b=3`, `a = b` sets `a=3`)."
+      },
+      {
+        "number": 8,
+        "type": "Coding",
+        "prompt": "Write a deep-copying `IntWrapper` class holding `int* p_` with constructor, copy constructor, exception-safe `operator=`, and destructor.",
+        "code": "",
+        "answerKey": "**Code Check:** Deep copy in `IntWrapper(const IntWrapper&)`, self-check + `new int(*rhs.p_)` before `delete p_` in `operator=`, `delete p_` in `~IntWrapper()`."
+      },
+      {
+        "number": 9,
+        "type": "Coding",
+        "prompt": "Implement `MyString` copy assignment using the **Copy-and-Swap Idiom**.",
+        "code": "",
+        "answerKey": "**Code Check:** `friend void swap(MyString&, MyString&) noexcept` + `MyString& operator=(MyString rhs) noexcept { swap(*this, rhs); return *this; }`."
+      },
+      {
+        "number": 10,
+        "type": "Design",
+        "prompt": "In an **Online Shopping System**, when placing an `Order` from a `ShoppingCart`, why should `OrderLineItem` copy `price` by value instead of pointing to `Product::price`?",
+        "code": "",
+        "answerKey": "**Design:** Historical orders must remain immutable even if catalog `Product` prices change later."
+      }
+    ]
+  },
+  {
+    "id": "mock-4",
+    "roundNumber": 4,
+    "title": "Inheritance, Access Modes & Overloading/Hiding",
+    "difficulty": "Medium",
+    "durationMinutes": 40,
+    "questions": [
+      {
+        "number": 1,
+        "type": "Theory",
+        "prompt": "Compare `public`, `protected`, and `private` inheritance in one sentence each.",
+        "code": "",
+        "answerKey": "`public` = \"is-a\" (keeps public/protected); `protected` = caps public to protected; `private` = \"implemented-in-terms-of\" (caps public/protected to private, hides upcast)."
+      },
+      {
+        "number": 2,
+        "type": "Theory",
+        "prompt": "Explain **Function Hiding (Name Hiding)** and how `using Base::fn;` fixes it.",
+        "code": "",
+        "answerKey": "Defining `Derived::fn(double)` hides *all* `Base::fn` overloads; `using Base::fn;` pulls them into `Derived`'s overload set."
+      },
+      {
+        "number": 3,
+        "type": "Theory",
+        "prompt": "Why can't two functions overload solely by return type?",
+        "code": "",
+        "answerKey": "Callers can ignore return values (`fn(5);`), making resolution impossible."
+      },
+      {
+        "number": 4,
+        "type": "Theory",
+        "prompt": "What is the exact construction order in `class C : public B, public A { Member m; };`?",
+        "code": "",
+        "answerKey": "`B()` -> `A()` -> `Member m` -> `C()` body (direct bases follow class header order, ignoring initializer list order!)."
+      },
+      {
+        "number": 5,
+        "type": "Theory",
+        "prompt": "What is the difference between **Composition** and **Aggregation** in terms of destructors?",
+        "code": "",
+        "answerKey": "Composition destroys parts when whole dies (`Engine` in `Car`); Aggregation lets parts outlive whole (`Professor` in `Department`)."
+      },
+      {
+        "number": 6,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   struct A { A() { std::cout << \"A\"; } ~A() { std::cout << \"~A\"; } };\n   struct B { B() { std::cout << \"B\"; } ~B() { std::cout << \"~B\"; } };\n   struct C : B, A { C() : A(), B() { std::cout << \"C\"; } ~C() { std::cout << \"~C\"; } };\n   int main() { C c; }",
+        "answerKey": "**Output:** `BAC~C~A~B`"
+      },
+      {
+        "number": 7,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   struct Base { void f(int) { std::cout << \"B_int \"; } };\n   struct Der : Base { void f(double) { std::cout << \"D_dbl \"; } };\n   int main() { Der d; d.f(5); d.Base::f(5); }",
+        "answerKey": "**Output:** `D_dbl B_int ` (`Der::f(double)` hides `Base::f(int)`, so `5` converts to `double`)."
+      },
+      {
+        "number": 8,
+        "type": "Coding",
+        "prompt": "Implement `Person` -> `Employee` -> `Manager` (multilevel inheritance) where each constructor passes fields cleanly up the chain.",
+        "code": "",
+        "answerKey": "**Code Check:** `: Person(...)` -> `: Employee(...)`."
+      },
+      {
+        "number": 9,
+        "type": "Coding",
+        "prompt": "Implement `Department` aggregating `Professor`s safely using `std::weak_ptr<Professor>` so retired professors don't crash `Department::list()`.",
+        "code": "",
+        "answerKey": "**Code Check:** `std::vector<std::weak_ptr<Professor>>`, lock with `if (auto sp = wp.lock())`."
+      },
+      {
+        "number": 10,
+        "type": "Design",
+        "prompt": "Design the class hierarchy and relationships for a **Library Management System** (explain `Book` vs `BookCopy`).",
+        "code": "",
+        "answerKey": "**Design:** Separate `Book` (ISBN/title metadata) from `BookCopy` (barcode/availability); `LoanRecord` links `Member` and `BookCopy`."
+      }
+    ]
+  },
+  {
+    "id": "mock-5",
+    "roundNumber": 5,
+    "title": "Virtual Functions, Polymorphism & Virtual Destructors",
+    "difficulty": "Medium-Hard",
+    "durationMinutes": 40,
+    "questions": [
+      {
+        "number": 1,
+        "type": "Theory",
+        "prompt": "What are the 3 mandatory conditions for runtime polymorphism in C++?",
+        "code": "",
+        "answerKey": "Public inheritance, `virtual` function in Base overridden in Derived, called via `Base*` or `Base&`."
+      },
+      {
+        "number": 2,
+        "type": "Theory",
+        "prompt": "Explain `vptr` and `vtable`—how many of each exist in memory?",
+        "code": "",
+        "answerKey": "**One `vtable` per polymorphic class**; **one `vptr` per object**."
+      },
+      {
+        "number": 3,
+        "type": "Theory",
+        "prompt": "Why is deleting a `Derived` object via `Base*` without a `virtual` destructor Undefined Behavior?",
+        "code": "",
+        "answerKey": "C++ standard explicitly marks `delete basePtr` with non-virtual `~Base()` as **Undefined Behavior** (derived destructor/cleanup skipped, allocator metadata mismatch)."
+      },
+      {
+        "number": 4,
+        "type": "Theory",
+        "prompt": "What is **Object Slicing**, and how does passing by `const Base&` stop it?",
+        "code": "",
+        "answerKey": "Copying `Derived` by value into `Base` drops derived data and resets `vptr` to `Base`; `const Base&` binds directly without copying."
+      },
+      {
+        "number": 5,
+        "type": "Theory",
+        "prompt": "Why shouldn't you override default parameter values on a `virtual` function?",
+        "code": "",
+        "answerKey": "Default args are statically bound using pointer type (`Base*`), while function body is dynamically bound (`Derived::fn`) -> mismatched combo!"
+      },
+      {
+        "number": 6,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   struct B { virtual void show(int x = 10) { std::cout << \"B:\" << x << \" \"; } };\n   struct D : B { void show(int x = 20) override { std::cout << \"D:\" << x << \" \"; } };\n   int main() { D d; B* p = &d; p->show(); d.show(); }",
+        "answerKey": "**Output:** `D:10 D:20 `"
+      },
+      {
+        "number": 7,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   struct B { B() { f(); } virtual void f() { std::cout << \"B \"; } virtual ~B() { f(); } };\n   struct D : B { void f() override { std::cout << \"D \"; } };\n   int main() { D d; }",
+        "answerKey": "**Output:** `B B ` (Inside `Base()` and `~Base()`, virtual calls stay at `Base`!)."
+      },
+      {
+        "number": 8,
+        "type": "Coding",
+        "prompt": "Write an abstract `Shape` class with `area() const = 0`, implement `Circle` and `Square`, and sum areas of `std::vector<std::unique_ptr<Shape>>`.",
+        "code": "",
+        "answerKey": "**Code Check:** `virtual ~Shape() = default; virtual double area() const = 0;`, loop summing `s->area()`."
+      },
+      {
+        "number": 9,
+        "type": "Coding",
+        "prompt": "Implement a `Base` class with a **pure virtual destructor** and verify a `Derived` class allocates/frees cleanly through `Base*`.",
+        "code": "",
+        "answerKey": "**Code Check:** `virtual ~Base() = 0;` + out-of-line `Base::~Base() {}`."
+      },
+      {
+        "number": 10,
+        "type": "Design",
+        "prompt": "Design a **Parking Lot** class model using polymorphism and Strategy Pattern for hourly vs flat pricing.",
+        "code": "",
+        "answerKey": "**Design:** `ParkingLot ◆--- ParkingFloor ◆--- ParkingSpot`; `Ticket` links `Vehicle` and `ParkingSpot`; inject `IPricingStrategy`."
+      }
+    ]
+  },
+  {
+    "id": "mock-6",
+    "roundNumber": 6,
+    "title": "Operator Overloading, `friend` & `const` Correctness",
+    "difficulty": "Medium-Hard",
+    "durationMinutes": 40,
+    "questions": [
+      {
+        "number": 1,
+        "type": "Theory",
+        "prompt": "Name the 5 operators that cannot be overloaded and 4 that must be member functions.",
+        "code": "",
+        "answerKey": "Cannot overload: `::`, `.`, `.*`, `?:`, `sizeof`. Must be members: `=`, `[]`, `()`, `->`."
+      },
+      {
+        "number": 2,
+        "type": "Theory",
+        "prompt": "Why should symmetric binary `+` be a non-member `friend`, while `+=` is a member?",
+        "code": "",
+        "answerKey": "`+=` mutates `*this`; non-member `+` enables implicit conversions on *both* operands (`2 + c` and `c + 2`)."
+      },
+      {
+        "number": 3,
+        "type": "Theory",
+        "prompt": "Does `friend` break encapsulation? When is it actually good design?",
+        "code": "",
+        "answerKey": "Used selectively (e.g. `operator<<`), `friend` *strengthens* encapsulation by avoiding exposing public setters to the whole world."
+      },
+      {
+        "number": 4,
+        "type": "Theory",
+        "prompt": "Explain bitwise constness vs logical constness (`mutable`).",
+        "code": "",
+        "answerKey": "Bitwise = no bytes directly inside object change (`const` default); Logical = observable state unchanged, allowing `mutable` cache/mutex updates."
+      },
+      {
+        "number": 5,
+        "type": "Theory",
+        "prompt": "Is friendship inherited, mutual, or transitive?",
+        "code": "",
+        "answerKey": "**No** to all three (not inherited, not symmetric, not transitive)."
+      },
+      {
+        "number": 6,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   struct C {\n       int x;\n       C(int v) : x(v) {}\n       C& operator++() { ++x; return *this; }\n       C operator++(int) { C t = *this; ++x; return t; }\n   };\n   int main() { C c(3); std::cout << (++c).x << \" \"; std::cout << (c++).x << \" \" << c.x; }",
+        "answerKey": "**Output:** `4 4 5` (`++c` makes `4`; `c++` returns `4` and bumps to `5`)."
+      },
+      {
+        "number": 7,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   class Box {\n       int* p;\n   public:\n       Box(int v) : p(new int(v)) {}\n       void set(int v) const { *p = v; }\n       int get() const { return *p; }\n       ~Box() { delete p; }\n   };\n   int main() { const Box b(5); b.set(9); std::cout << b.get(); }",
+        "answerKey": "**Output:** `9` (inside `set() const`, `p` is `int* const`, so `*p = 9;` compiles and mutates heap int!)."
+      },
+      {
+        "number": 8,
+        "type": "Coding",
+        "prompt": "Implement a `Complex` class overloading `+`, `==`, and `<<` so `2.0 + c` works cleanly.",
+        "code": "",
+        "answerKey": "**Code Check:** Non-explicit `Complex(double r = 0, double i = 0)` + `friend Complex operator+(const Complex&, const Complex&)`."
+      },
+      {
+        "number": 9,
+        "type": "Coding",
+        "prompt": "Implement a thread-safe `Counter` using `mutable std::mutex` so `get() const` locks safely.",
+        "code": "",
+        "answerKey": "**Code Check:** `mutable std::mutex mtx_;` locked via `std::lock_guard<std::mutex>` inside `get() const`."
+      },
+      {
+        "number": 10,
+        "type": "Design",
+        "prompt": "Design an **ATM System** using the State Pattern (`IATMState`) and explain how encapsulation protects PINs.",
+        "code": "",
+        "answerKey": "**Design:** `ATM ◆--- IATMState` (`IdleState`, `HasCardState`, `AuthenticatedState`), `CashDispenser`, `IBankBackend`."
+      }
+    ]
+  },
+  {
+    "id": "mock-7",
+    "roundNumber": 7,
+    "title": "Diamond Problem, Multiple Inheritance & C++17 `inline static`",
+    "difficulty": "Hard",
+    "durationMinutes": 45,
+    "questions": [
+      {
+        "number": 1,
+        "type": "Theory",
+        "prompt": "Explain the Diamond Problem and how `virtual` inheritance solves it.",
+        "code": "",
+        "answerKey": "Duplicate copies of grand-base `A` cause ambiguity and wasted memory; `virtual public A` on `B` and `C` merges `A` into one shared subobject."
+      },
+      {
+        "number": 2,
+        "type": "Theory",
+        "prompt": "In virtual inheritance (`A -> B, C -> D`), which constructor initializes `A`?",
+        "code": "",
+        "answerKey": "Always the **most-derived class (`D`)**; `B`/`C`'s calls to `A(...)` are ignored when constructing `D`."
+      },
+      {
+        "number": 3,
+        "type": "Theory",
+        "prompt": "Why does `Base1* p1 = &d;` vs `Base2* p2 = &d;` give different raw memory addresses in multiple inheritance?",
+        "code": "",
+        "answerKey": "`B2` lives at a non-zero byte offset after `B1` inside `Derived`; compiler adds `+offset` during `Derived* -> Base2*`."
+      },
+      {
+        "number": 4,
+        "type": "Theory",
+        "prompt": "Why did C++17 introduce `inline static` data members, and what does `inline` mean on a variable?",
+        "code": "",
+        "answerKey": "Allows defining/initializing any `static` member (including mutable and `std::string`) inside headers; `inline` tells linker to merge duplicate definitions across TUs into one variable."
+      },
+      {
+        "number": 5,
+        "type": "Theory",
+        "prompt": "Are `static constexpr` members implicitly `inline` in C++17? Why does that matter when taking `&Class::CONST`?",
+        "code": "",
+        "answerKey": "**Yes** (`static constexpr` is implicitly `inline` in C++17, so taking `&Class::CONST` needs no out-of-class definition)."
+      },
+      {
+        "number": 6,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   struct A { A(int x) { std::cout << \"A\" << x << \" \"; } };\n   struct B : virtual A { B() : A(1) { std::cout << \"B \"; } };\n   struct C : virtual A { C() : A(2) { std::cout << \"C \"; } };\n   struct D : B, C { D() : A(7) { std::cout << \"D \"; } };\n   int main() { D d; }",
+        "answerKey": "**Output:** `A7 B C D `"
+      },
+      {
+        "number": 7,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   template <typename T> struct S { inline static int c = 0; S() { ++c; } };\n   int main() { S<int> a, b; S<double> x; std::cout << S<int>::c << \" \" << S<double>::c; }",
+        "answerKey": "**Output:** `2 1` (each template specialization is a distinct class with its own `c`)."
+      },
+      {
+        "number": 8,
+        "type": "Coding",
+        "prompt": "Implement a `PoweredDevice -> Scanner, Printer -> Copier` diamond cleanly using virtual inheritance.",
+        "code": "",
+        "answerKey": "**Code Check:** `Scanner : virtual public PoweredDevice`, `Printer : virtual public PoweredDevice`, `Copier : public Scanner, public Printer` calling `PoweredDevice(s)`."
+      },
+      {
+        "number": 9,
+        "type": "Coding",
+        "prompt": "Create a `PluginRegistry` using `inline static std::unordered_map` to register and instantiate polymorphic `IPlugin` objects without `if/else` chains.",
+        "code": "",
+        "answerKey": "**Code Check:** `inline static std::unordered_map<std::string, Creator> map_;` registering lambdas returning `std::unique_ptr<IPlugin>`."
+      },
+      {
+        "number": 10,
+        "type": "Design",
+        "prompt": "Design a **Multi-Channel Notification System** supporting Email, SMS, and Push with retry policies.",
+        "code": "",
+        "answerKey": "**Design:** `NotificationDispatcher ---> INotificationChannel` (`Email`, `SMS`, `Push`) + `IRetryPolicy`."
+      }
+    ]
+  },
+  {
+    "id": "mock-8",
+    "roundNumber": 8,
+    "title": "Rule of 3, Rule of 5, Rule of 0 & Memory Internals",
+    "difficulty": "Hard",
+    "durationMinutes": 45,
+    "questions": [
+      {
+        "number": 1,
+        "type": "Theory",
+        "prompt": "State the Rule of 3, Rule of 5, and Rule of 0, and explain why Rule of 0 is preferred in C++17.",
+        "code": "",
+        "answerKey": "Rule of 3 (`~T`, copy ctor, copy assign); Rule of 5 (+ move ctor, move assign); Rule of 0 (compose RAII types, write none). Rule of 0 eliminates leaks and boilerplate."
+      },
+      {
+        "number": 2,
+        "type": "Theory",
+        "prompt": "What happens to implicit move operations if you write `~MyClass() = default;` in a non-polymorphic class?",
+        "code": "",
+        "answerKey": "Suppresses implicit generation of move constructor and move assignment!"
+      },
+      {
+        "number": 3,
+        "type": "Theory",
+        "prompt": "Why must move constructors and move assignment operators be marked `noexcept`?",
+        "code": "",
+        "answerKey": "Otherwise `std::vector` falls back to slow copying during reallocation to maintain strong exception safety."
+      },
+      {
+        "number": 4,
+        "type": "Theory",
+        "prompt": "What happens if you call `std::move` on a `const` object?",
+        "code": "",
+        "answerKey": "`std::move(constObj)` produces `const T&&`, which cannot bind to `T&&` -> silently calls the **Copy Constructor**!"
+      },
+      {
+        "number": 5,
+        "type": "Theory",
+        "prompt": "Explain the **Empty Base Optimization (EBO)** and why `sizeof(Derived)` can be smaller than `sizeof(Empty) + sizeof(int)`.",
+        "code": "",
+        "answerKey": "Compiler gives an empty base class 0 bytes inside `Derived` (`sizeof(Derived) == sizeof(int)`)."
+      },
+      {
+        "number": 6,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   #include <utility>\n   struct T {\n       T() = default;\n       T(const T&) { std::cout << \"Copy \"; }\n       T(T&&) noexcept { std::cout << \"Move \"; }\n   };\n   struct W { T t; ~W() = default; };\n   int main() { W a; W b = std::move(a); }",
+        "answerKey": "**Output:** `Copy ` (`~W() = default;` suppressed implicit move!)."
+      },
+      {
+        "number": 7,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   struct Base { virtual void f() { std::cout << \"B \"; } virtual ~Base() = default; };\n   struct Der : Base { void f() override { std::cout << \"D \"; } };\n   int main() { Der d; static_cast<Base*>(&d)->f(); static_cast<Base>(d).f(); }",
+        "answerKey": "**Output:** `D B ` (`static_cast<Base*>` keeps dynamic type `Der`; `static_cast<Base>(d)` slices to temporary `Base`)."
+      },
+      {
+        "number": 8,
+        "type": "Coding",
+        "prompt": "Write a complete Rule of 5 `DynArray` class managing `int*` with `std::exchange` and `noexcept` move operations.",
+        "code": "",
+        "answerKey": "**Code Check:** Verify `noexcept`, `std::exchange(o.ptr_, nullptr)`, `if (this != &rhs)` in move assign, and `new[]` before `delete[]` in copy assign."
+      },
+      {
+        "number": 9,
+        "type": "Coding",
+        "prompt": "Write a move-only RAII `UniqueHandle` wrapping a raw `int*` (or `FILE*`) using `= delete` on copy operations.",
+        "code": "",
+        "answerKey": "**Code Check:** `= delete` on copy ctor & copy assign; move transfers via `std::exchange`; destructor releases if non-null."
+      },
+      {
+        "number": 10,
+        "type": "Design",
+        "prompt": "Design an **Extensible Logger & File Rotation System** applying RAII, SRP, and DIP.",
+        "code": "",
+        "answerKey": "**Design:** `Logger ◆--- ILogSink` (`ConsoleSink`, `RotatingFileSink`), `IFormatter`, `std::mutex` + RAII file handle."
+      }
+    ]
+  },
+  {
+    "id": "mock-9",
+    "roundNumber": 9,
+    "title": "SOLID Principles Deep Dive & Refactoring",
+    "difficulty": "Hard",
+    "durationMinutes": 45,
+    "questions": [
+      {
+        "number": 1,
+        "type": "Theory",
+        "prompt": "Explain SRP and give a concrete example of how a \"God class\" violates it.",
+        "code": "",
+        "answerKey": "A class should have one cohesive reason to change (not mixing calculation + formatting + SQL persistence)."
+      },
+      {
+        "number": 2,
+        "type": "Theory",
+        "prompt": "How do you recognize an **LSP violation** in code review? Give two classic examples.",
+        "code": "",
+        "answerKey": "Overrides throwing `NotSupported`, empty no-op overrides (`Penguin::fly(){}`), or side effects breaking base invariants (`Square : Rectangle`)."
+      },
+      {
+        "number": 3,
+        "type": "Theory",
+        "prompt": "Explain the difference between **DIP** and **Dependency Injection (DI)**.",
+        "code": "",
+        "answerKey": "DIP = principle (depend on abstractions); DI = mechanism (pass dependencies via constructor/setter)."
+      },
+      {
+        "number": 4,
+        "type": "Theory",
+        "prompt": "How do ISP and LSP complement each other in C++ interface design?",
+        "code": "",
+        "answerKey": "Splitting fat interfaces (ISP) prevents forcing subclasses to stub/throw on unsupported methods (LSP)."
+      },
+      {
+        "number": 5,
+        "type": "Theory",
+        "prompt": "How can C++ templates implement OCP and DIP with **zero** virtual dispatch overhead?",
+        "code": "",
+        "answerKey": "Template policy injection (`template<typename Policy> class Service`) binds concrete policies at compile time."
+      },
+      {
+        "number": 6,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   struct B {\n   public:\n       virtual void run() { std::cout << \"B\"; }\n       virtual ~B() = default;\n   };\n   struct D : B {\n   private:\n       void run() override { std::cout << \"D\"; }\n   };\n   int main() { D d; B* p = &d; p->run(); }",
+        "answerKey": "**Output:** `D` (access check uses static type `B*` where `run()` is `public`; runtime vtable calls `D::run()`)."
+      },
+      {
+        "number": 7,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   #include <stdexcept>\n   struct M { int i; M(int x) : i(x) { if (x == 2) throw 1; std::cout << \"+\" << i; } ~M() { std::cout << \"-\" << i; } };\n   struct W { M a{1}, b{2}; W() { std::cout << \"W\"; } ~W() { std::cout << \"~W\"; } };\n   int main() { try { W w; } catch (...) { std::cout << \"C\"; } }",
+        "answerKey": "**Output:** `+1-1C` (`b{2}` throws before completing; `a{1}` destructs; `~W()` does NOT run)."
+      },
+      {
+        "number": 8,
+        "type": "Coding",
+        "prompt": "Refactor a bad `Report` class (calculates stats + prints HTML + saves to disk) to obey SRP.",
+        "code": "",
+        "answerKey": "**Code Check:** `ReportData`, `HtmlReportFormatter`, `ReportStorage`."
+      },
+      {
+        "number": 9,
+        "type": "Coding",
+        "prompt": "Implement an extensible **Payment Checkout** (`IPaymentMethod`, `IRefundable`, `CheckoutService`) obeying OCP, LSP, ISP, and DIP.",
+        "code": "",
+        "answerKey": "**Code Check:** `IPaymentMethod { pay() }`, `IRefundable { refund() }`, `CheckoutService` taking `IPaymentMethod&`."
+      },
+      {
+        "number": 10,
+        "type": "Design",
+        "prompt": "Design a **Movie Ticket Booking System** addressing concurrent seat locking and price strategies.",
+        "code": "",
+        "answerKey": "**Design:** `Theater ◆--- Screen ◆--- Seat`, `Show ◆--- ShowSeat`, per-`Show` `std::mutex` atomic seat locking + `IPricingStrategy`."
+      }
+    ]
+  },
+  {
+    "id": "mock-10",
+    "roundNumber": 10,
+    "title": "Final Boss — Hard Internals, Edge Cases & System Design",
+    "difficulty": "Hard+",
+    "durationMinutes": 45,
+    "questions": [
+      {
+        "number": 1,
+        "type": "Theory",
+        "prompt": "Explain the **Static Initialization Order Fiasco (SIOF)** and why `inline static` alone does not fix cross-TU initialization order.",
+        "code": "",
+        "answerKey": "`inline static` merges duplicate definitions across `.cpp` files (fixes ODR), **not** cross-TU initialization order! Use Meyers' Singleton (`static T& instance()`) for order-dependent globals."
+      },
+      {
+        "number": 2,
+        "type": "Theory",
+        "prompt": "Explain the **PIMPL idiom** and why `~Widget()` must be defined in `.cpp` when using `std::unique_ptr<Impl>`.",
+        "code": "",
+        "answerKey": "`std::unique_ptr<Impl>`'s default deleter calls `delete pImpl_`, requiring `Impl` to be a complete type where `~Widget()` is instantiated—so define `~Widget() = default;` in `.cpp` after `struct Impl`."
+      },
+      {
+        "number": 3,
+        "type": "Theory",
+        "prompt": "Compare `static_cast`, `dynamic_cast`, and `reinterpret_cast` in a multiple/virtual inheritance hierarchy.",
+        "code": "",
+        "answerKey": "`static_cast` adjusts offsets statically (cannot downcast from `virtual` base); `dynamic_cast` uses RTTI safely at runtime (handles `virtual` bases); `reinterpret_cast` skips offset adjustments (dangerous across MI!)."
+      },
+      {
+        "number": 4,
+        "type": "Theory",
+        "prompt": "Explain the **Non-Virtual Interface (NVI)** idiom and why `private virtual` is legal and useful.",
+        "code": "",
+        "answerKey": "Public non-virtual method enforces pre/post-conditions and calls `private virtual` hooks overridden by subclasses."
+      },
+      {
+        "number": 5,
+        "type": "Theory",
+        "prompt": "How does the **Passkey Idiom** give finer-grained access control than `friend class`?",
+        "code": "",
+        "answerKey": "Nested `class Key { Key() = default; friend class Trusted; };` lets `Trusted` call *only* the gated method without touching private fields."
+      },
+      {
+        "number": 6,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   struct A { int a = 1; };\n   struct B { int b = 2; };\n   struct C : A, B { int c = 3; };\n   int main() {\n       C obj; B* pb = &obj; C* pc = &obj;\n       std::cout << (pb == pc) << \" \" << (reinterpret_cast<void*>(pb) == reinterpret_cast<void*>(pc));\n   }",
+        "answerKey": "**Output:** `1 0` (`pb == pc` adjusts `pc` by `+sizeof(A)`; `void*` compares raw addresses which differ!)."
+      },
+      {
+        "number": 7,
+        "type": "Output",
+        "prompt": "Predict the output:",
+        "code": "#include <iostream>\n   struct U {\n       inline static int k = 0;\n       static void ping() { std::cout << ++k << \" \"; }\n   };\n   int main() { U* p = nullptr; p->ping(); U::ping(); }",
+        "answerKey": "**Output:** `1 2 ` (`ping()` is `static` so `p->ping()` doesn't dereference `nullptr`)."
+      },
+      {
+        "number": 8,
+        "type": "Coding",
+        "prompt": "Implement the **Virtual Constructor (`clone()`)** idiom for a `Document` hierarchy inside a deep-copyable `Folder` class.",
+        "code": "",
+        "answerKey": "**Code Check:** `virtual std::unique_ptr<Document> clone() const = 0;`, `Folder` copy constructor loops calling `d->clone()`."
+      },
+      {
+        "number": 9,
+        "type": "Coding",
+        "prompt": "Implement a simplified `UniquePtr<T>` with `release()`, `reset()`, `*`, `->`, `explicit operator bool`, and move semantics.",
+        "code": "",
+        "answerKey": "**Code Check:** `explicit operator bool() const noexcept`, `release()` via `std::exchange`, `reset()` swapping before `delete`."
+      },
+      {
+        "number": 10,
+        "type": "Design",
+        "prompt": "Design a **Ride-Sharing System** (`Rider`, `Driver`, `Ride`, `IDriverMatcher`, `IFareCalculator`) handling concurrent driver acceptance and surge pricing.",
+        "code": "",
+        "answerKey": "**Design:** `User <--- {Rider, Driver}`, `Ride` (mutex-guarded `accept()`), `IDriverMatcher`, `IFareCalculator` (+ surge decorator)."
+      }
+    ]
+  }
+]

@@ -1,0 +1,500 @@
+[
+  {
+    "day": 1,
+    "week": "Week 1: Core Foundations, Memory & Pending Topic #1 (Copy Assignment)",
+    "summary": "Topics 1–5 (Section 1A) + Coding Problems 1–2 + Verbal D-W-E-T drill.",
+    "tasks": [
+      {
+        "id": "d1_t1",
+        "label": "Topics 1–5 (Section 1A)"
+      },
+      {
+        "id": "d1_t2",
+        "label": "Coding Problems 1–2"
+      },
+      {
+        "id": "d1_t3",
+        "label": "Verbal D-W-E-T drill."
+      }
+    ]
+  },
+  {
+    "day": 2,
+    "week": "Week 1: Core Foundations, Memory & Pending Topic #1 (Copy Assignment)",
+    "summary": "Topics 6–9 (Constructors, Copy Ctor, Shallow/Deep, Destructor) + Output Puzzles 1–6.",
+    "tasks": [
+      {
+        "id": "d2_t1",
+        "label": "Topics 6–9 (Constructors, Copy Ctor, Shallow/Deep, Destructor)"
+      },
+      {
+        "id": "d2_t2",
+        "label": "Output Puzzles 1–6."
+      }
+    ]
+  },
+  {
+    "day": 3,
+    "week": "Week 1: Core Foundations, Memory & Pending Topic #1 (Copy Assignment)",
+    "summary": "Topics 10–12 (Order, `this`, `static`) + Output Puzzles 7–10 + Coding Problems 3–6.",
+    "tasks": [
+      {
+        "id": "d3_t1",
+        "label": "Topics 10–12 (Order, `this`, `static`)"
+      },
+      {
+        "id": "d3_t2",
+        "label": "Output Puzzles 7–10"
+      },
+      {
+        "id": "d3_t3",
+        "label": "Coding Problems 3–6."
+      }
+    ]
+  },
+  {
+    "day": 4,
+    "week": "Week 1: Core Foundations, Memory & Pending Topic #1 (Copy Assignment)",
+    "summary": "**Pending Topic Deep Dive — Copy Assignment Operator (Section 9)**: theory + 5 output Qs + Coding #10, #21.",
+    "tasks": [
+      {
+        "id": "d4_t1",
+        "label": "**Pending Topic Deep Dive — Copy Assignment Operator (Section 9)**: theory"
+      },
+      {
+        "id": "d4_t2",
+        "label": "5 output Qs"
+      },
+      {
+        "id": "d4_t3",
+        "label": "Coding #10, #21."
+      }
+    ]
+  },
+  {
+    "day": 5,
+    "week": "Week 1: Core Foundations, Memory & Pending Topic #1 (Copy Assignment)",
+    "summary": "**Pending Topic Deep Dive — `inline static` (C++17) (Section 10)**: theory + 5 output Qs + Coding #4, #32.",
+    "tasks": [
+      {
+        "id": "d5_t1",
+        "label": "**Pending Topic Deep Dive — `inline static` (C"
+      },
+      {
+        "id": "d5_t2",
+        "label": "17) (Section 10)**: theory"
+      },
+      {
+        "id": "d5_t3",
+        "label": "5 output Qs"
+      },
+      {
+        "id": "d5_t4",
+        "label": "Coding #4, #32."
+      }
+    ]
+  },
+  {
+    "day": 6,
+    "week": "Week 1: Core Foundations, Memory & Pending Topic #1 (Copy Assignment)",
+    "summary": "Coding Practice: Problems 7–12 (compile and run with `g++ -std=c++17`) + Comparisons #1–6 (Section 5).",
+    "tasks": [
+      {
+        "id": "d6_t1",
+        "label": "Coding Practice: Problems 7–12 (compile and run with `g"
+      },
+      {
+        "id": "d6_t2",
+        "label": "-std=c"
+      },
+      {
+        "id": "d6_t3",
+        "label": "17`)"
+      },
+      {
+        "id": "d6_t4",
+        "label": "Comparisons #1–6 (Section 5)."
+      }
+    ]
+  },
+  {
+    "day": 7,
+    "week": "Week 1: Core Foundations, Memory & Pending Topic #1 (Copy Assignment)",
+    "summary": "**Mock Interview Rounds 1 & 2** + check Answer Key + log weak areas.",
+    "tasks": [
+      {
+        "id": "d7_t1",
+        "label": "**Mock Interview Rounds 1 & 2**"
+      },
+      {
+        "id": "d7_t2",
+        "label": "check Answer Key"
+      },
+      {
+        "id": "d7_t3",
+        "label": "log weak areas."
+      }
+    ]
+  },
+  {
+    "day": 8,
+    "week": "Week 2: Inheritance, Polymorphism & Operator Overloading",
+    "summary": "Topics 13–15 (Inheritance, Types, Access Modes) + Coding Problems 13–15 + Output Puzzles 3–4, 41.",
+    "tasks": [
+      {
+        "id": "d8_t1",
+        "label": "Topics 13–15 (Inheritance, Types, Access Modes)"
+      },
+      {
+        "id": "d8_t2",
+        "label": "Coding Problems 13–15"
+      },
+      {
+        "id": "d8_t3",
+        "label": "Output Puzzles 3–4, 41."
+      }
+    ]
+  },
+  {
+    "day": 9,
+    "week": "Week 2: Inheritance, Polymorphism & Operator Overloading",
+    "summary": "Topics 16–18 (Overloading, Overriding, Runtime Polymorphism) + Output Puzzles 13–17.",
+    "tasks": [
+      {
+        "id": "d9_t1",
+        "label": "Topics 16–18 (Overloading, Overriding, Runtime Polymorphism)"
+      },
+      {
+        "id": "d9_t2",
+        "label": "Output Puzzles 13–17."
+      }
+    ]
+  },
+  {
+    "day": 10,
+    "week": "Week 2: Inheritance, Polymorphism & Operator Overloading",
+    "summary": "Topics 19–20 (Operator Overloading, Virtual Destructor) + Output Puzzles 18, 30, 43 + Coding #11, #19.",
+    "tasks": [
+      {
+        "id": "d10_t1",
+        "label": "Topics 19–20 (Operator Overloading, Virtual Destructor)"
+      },
+      {
+        "id": "d10_t2",
+        "label": "Output Puzzles 18, 30, 43"
+      },
+      {
+        "id": "d10_t3",
+        "label": "Coding #11, #19."
+      }
+    ]
+  },
+  {
+    "day": 11,
+    "week": "Week 2: Inheritance, Polymorphism & Operator Overloading",
+    "summary": "Topics 21–24 (Pure Virtual, Abstract Class, Interface, Diamond Problem) + Output Puzzles 19–22, 45 + Coding #20, #28.",
+    "tasks": [
+      {
+        "id": "d11_t1",
+        "label": "Topics 21–24 (Pure Virtual, Abstract Class, Interface, Diamond Problem)"
+      },
+      {
+        "id": "d11_t2",
+        "label": "Output Puzzles 19–22, 45"
+      },
+      {
+        "id": "d11_t3",
+        "label": "Coding #20, #28."
+      }
+    ]
+  },
+  {
+    "day": 12,
+    "week": "Week 2: Inheritance, Polymorphism & Operator Overloading",
+    "summary": "Output Puzzles 23–26, 36–40 (compile/trace tricky traps) + Comparisons #7–12, #16–17.",
+    "tasks": [
+      {
+        "id": "d12_t1",
+        "label": "Output Puzzles 23–26, 36–40 (compile/trace tricky traps)"
+      },
+      {
+        "id": "d12_t2",
+        "label": "Comparisons #7–12, #16–17."
+      }
+    ]
+  },
+  {
+    "day": 13,
+    "week": "Week 2: Inheritance, Polymorphism & Operator Overloading",
+    "summary": "Coding Practice: Problems 18, 22, 27, 29, 34 + review missed puzzles from Days 8–12.",
+    "tasks": [
+      {
+        "id": "d13_t1",
+        "label": "Coding Practice: Problems 18, 22, 27, 29, 34"
+      },
+      {
+        "id": "d13_t2",
+        "label": "review missed puzzles from Days 8–12."
+      }
+    ]
+  },
+  {
+    "day": 14,
+    "week": "Week 2: Inheritance, Polymorphism & Operator Overloading",
+    "summary": "**Mock Interview Rounds 3, 4 & 5** + grade honestly + revise weak topics.",
+    "tasks": [
+      {
+        "id": "d14_t1",
+        "label": "**Mock Interview Rounds 3, 4 & 5**"
+      },
+      {
+        "id": "d14_t2",
+        "label": "grade honestly"
+      },
+      {
+        "id": "d14_t3",
+        "label": "revise weak topics."
+      }
+    ]
+  },
+  {
+    "day": 15,
+    "week": "Week 3: Relationships, SOLID & Rule of 3/5/0",
+    "summary": "Topics 25–28 (`friend`, `const`, Composition, Aggregation, Association) + Output Puzzles 24–25, 42, 50 + Coding #23, #25, #26.",
+    "tasks": [
+      {
+        "id": "d15_t1",
+        "label": "Topics 25–28 (`friend`, `const`, Composition, Aggregation, Association)"
+      },
+      {
+        "id": "d15_t2",
+        "label": "Output Puzzles 24–25, 42, 50"
+      },
+      {
+        "id": "d15_t3",
+        "label": "Coding #23, #25, #26."
+      }
+    ]
+  },
+  {
+    "day": 16,
+    "week": "Week 3: Relationships, SOLID & Rule of 3/5/0",
+    "summary": "**Rule of 3/5/0 Deep Dive (Section 8)** + Output Puzzles 27–29, 31–32.",
+    "tasks": [
+      {
+        "id": "d16_t1",
+        "label": "**Rule of 3/5/0 Deep Dive (Section 8)**"
+      },
+      {
+        "id": "d16_t2",
+        "label": "Output Puzzles 27–29, 31–32."
+      }
+    ]
+  },
+  {
+    "day": 17,
+    "week": "Week 3: Relationships, SOLID & Rule of 3/5/0",
+    "summary": "Coding Practice: Rule of 5 `Buffer` (#35), Rule of 0 `AudioClip` (#36), Diamond (#37), `MyString` (#30).",
+    "tasks": [
+      {
+        "id": "d17_t1",
+        "label": "Coding Practice: Rule of 5 `Buffer` (#35), Rule of 0 `AudioClip` (#36), Diamond (#37), `MyString` (#30)."
+      }
+    ]
+  },
+  {
+    "day": 18,
+    "week": "Week 3: Relationships, SOLID & Rule of 3/5/0",
+    "summary": "**SOLID Principles (Section 7)**: S, O, L + 15 Q&A + 6 practice problems.",
+    "tasks": [
+      {
+        "id": "d18_t1",
+        "label": "**SOLID Principles (Section 7)**: S, O, L"
+      },
+      {
+        "id": "d18_t2",
+        "label": "15 Q&A"
+      },
+      {
+        "id": "d18_t3",
+        "label": "6 practice problems."
+      }
+    ]
+  },
+  {
+    "day": 19,
+    "week": "Week 3: Relationships, SOLID & Rule of 3/5/0",
+    "summary": "**SOLID Principles (Section 7)**: I, D + 10 Q&A + Coding #31, #38, #48.",
+    "tasks": [
+      {
+        "id": "d19_t1",
+        "label": "**SOLID Principles (Section 7)**: I, D"
+      },
+      {
+        "id": "d19_t2",
+        "label": "10 Q&A"
+      },
+      {
+        "id": "d19_t3",
+        "label": "Coding #31, #38, #48."
+      }
+    ]
+  },
+  {
+    "day": 20,
+    "week": "Week 3: Relationships, SOLID & Rule of 3/5/0",
+    "summary": "Advanced Coding: `UniqueFile` (#40), `UniquePtr` (#41), `SharedInt` (#42), `clone()` (#39) + Comparisons #13–22.",
+    "tasks": [
+      {
+        "id": "d20_t1",
+        "label": "Advanced Coding: `UniqueFile` (#40), `UniquePtr` (#41), `SharedInt` (#42), `clone()` (#39)"
+      },
+      {
+        "id": "d20_t2",
+        "label": "Comparisons #13–22."
+      }
+    ]
+  },
+  {
+    "day": 21,
+    "week": "Week 3: Relationships, SOLID & Rule of 3/5/0",
+    "summary": "**Mock Interview Rounds 6, 7 & 8** + grade + weak-topic deep repair.",
+    "tasks": [
+      {
+        "id": "d21_t1",
+        "label": "**Mock Interview Rounds 6, 7 & 8**"
+      },
+      {
+        "id": "d21_t2",
+        "label": "grade"
+      },
+      {
+        "id": "d21_t3",
+        "label": "weak-topic deep repair."
+      }
+    ]
+  },
+  {
+    "day": 22,
+    "week": "Week 4: Real-Life Design, Hard C++ Internals & Final Polish",
+    "summary": "Real-Life OOP Designs #1–5 (Section 6) — practice drawing UML + explaining aloud.",
+    "tasks": [
+      {
+        "id": "d22_t1",
+        "label": "Real-Life OOP Designs #1–5 (Section 6) — practice drawing UML"
+      },
+      {
+        "id": "d22_t2",
+        "label": "explaining aloud."
+      }
+    ]
+  },
+  {
+    "day": 23,
+    "week": "Week 4: Real-Life Design, Hard C++ Internals & Final Polish",
+    "summary": "Real-Life OOP Designs #6–12 + Advanced Coding #43–45 (`Packet`, `SafeGrid`, `PluginFactory`).",
+    "tasks": [
+      {
+        "id": "d23_t1",
+        "label": "Real-Life OOP Designs #6–12"
+      },
+      {
+        "id": "d23_t2",
+        "label": "Advanced Coding #43–45 (`Packet`, `SafeGrid`, `PluginFactory`)."
+      }
+    ]
+  },
+  {
+    "day": 24,
+    "week": "Week 4: Real-Life Design, Hard C++ Internals & Final Polish",
+    "summary": "Real-Life OOP Designs #13–20 + Advanced Coding #46–48 (`Observer`, `Passkey`, `Decorator`).",
+    "tasks": [
+      {
+        "id": "d24_t1",
+        "label": "Real-Life OOP Designs #13–20"
+      },
+      {
+        "id": "d24_t2",
+        "label": "Advanced Coding #46–48 (`Observer`, `Passkey`, `Decorator`)."
+      }
+    ]
+  },
+  {
+    "day": 25,
+    "week": "Week 4: Real-Life Design, Hard C++ Internals & Final Polish",
+    "summary": "Advanced Coding #49–51 (`PIMPL`, `ThreadSafeAccount`, `LRUCache`) + Output Puzzles 44, 46–52.",
+    "tasks": [
+      {
+        "id": "d25_t1",
+        "label": "Advanced Coding #49–51 (`PIMPL`, `ThreadSafeAccount`, `LRUCache`)"
+      },
+      {
+        "id": "d25_t2",
+        "label": "Output Puzzles 44, 46–52."
+      }
+    ]
+  },
+  {
+    "day": 26,
+    "week": "Week 4: Real-Life Design, Hard C++ Internals & Final Polish",
+    "summary": "Rapid-Fire Review: Section 2 (105 Top Questions) Q1–Q55 out loud.",
+    "tasks": [
+      {
+        "id": "d26_t1",
+        "label": "Rapid-Fire Review: Section 2 (105 Top Questions) Q1–Q55 out loud."
+      }
+    ]
+  },
+  {
+    "day": 27,
+    "week": "Week 4: Real-Life Design, Hard C++ Internals & Final Polish",
+    "summary": "Rapid-Fire Review: Section 2 (105 Top Questions) Q56–Q105 out loud.",
+    "tasks": [
+      {
+        "id": "d27_t1",
+        "label": "Rapid-Fire Review: Section 2 (105 Top Questions) Q56–Q105 out loud."
+      }
+    ]
+  },
+  {
+    "day": 28,
+    "week": "Week 4: Real-Life Design, Hard C++ Internals & Final Polish",
+    "summary": "**Mock Interview Round 9** + re-solve any previously missed output puzzles from Section 3.",
+    "tasks": [
+      {
+        "id": "d28_t1",
+        "label": "**Mock Interview Round 9**"
+      },
+      {
+        "id": "d28_t2",
+        "label": "re-solve any previously missed output puzzles from Section 3."
+      }
+    ]
+  },
+  {
+    "day": 29,
+    "week": "Week 4: Real-Life Design, Hard C++ Internals & Final Polish",
+    "summary": "**Mock Interview Round 10 (Final Boss)** + review all 22 Comparison Tables (Section 5).",
+    "tasks": [
+      {
+        "id": "d29_t1",
+        "label": "**Mock Interview Round 10 (Final Boss)**"
+      },
+      {
+        "id": "d29_t2",
+        "label": "review all 22 Comparison Tables (Section 5)."
+      }
+    ]
+  },
+  {
+    "day": 30,
+    "week": "Week 4: Real-Life Design, Hard C++ Internals & Final Polish",
+    "summary": "**Final Light Revision Only:** Read the Pre-Interview 5-Minute Memory Map in Master Guide, review Final Checklist below, and rest well!",
+    "tasks": [
+      {
+        "id": "d30_t1",
+        "label": "**Final Light Revision Only:** Read the Pre-Interview 5-Minute Memory Map in Master Guide, review Final Checklist below, and rest well!"
+      }
+    ]
+  }
+]
